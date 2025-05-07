@@ -3,9 +3,9 @@ let maskImg=null;
 let renderCounter=0;
 
 // change these three lines as appropiate
-let sourceFile = "input_1.jpg";
-let maskFile   = "mask_1.png";
-let outputFile = "output_1.png";
+let sourceFile = "input_3.jpg";
+let maskFile   = "mask_3.png";
+let outputFile = "output_3.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
@@ -27,7 +27,9 @@ function setup () {
 }
 
 function draw () {
+  
   for(let i=0;i<4000;i++) {
+    
     let x = floor(random(sourceImg.width));
     let y = floor(random(sourceImg.height));
     let pixData = sourceImg.get(x, y);
@@ -48,6 +50,7 @@ function draw () {
     else {
       //let pointSize = 10;
       //ellipse(x, y, pointSize, pointSize);
+      set
       push();
       stroke(pixData);
       line(x + line1, y + line1, x - line2, y - line2);
