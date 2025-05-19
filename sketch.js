@@ -3,9 +3,9 @@ let maskImg=null;
 let renderCounter=0;
 
 // change these three lines as appropiate
-let sourceFile = "input_3.jpg";
-let maskFile   = "mask_3.png";
-let outputFile = "output_3.png";
+let sourceFile = "input_1.jpg";
+let maskFile   = "mask_1.png";
+let outputFile = "output_1.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
@@ -27,7 +27,11 @@ function setup () {
 }
 
 function draw () {
-  
+
+  if (renderCounter == 0) {
+    //missing();
+  }
+
   for(let i=0;i<4000;i++) {
     
     let x = floor(random(sourceImg.width));
@@ -43,14 +47,19 @@ function draw () {
 
     fill(pixData);
     if(maskData[0] < 128) {
-      let pointSize = 30;
+      let pointSize = 20;
       //ellipse(x, y, pointSize, pointSize);
       arc(x, y, pointSize, pointSize, aStart, aStop);
+      // push();
+      // rectMode(CENTER);
+      // strokeWeight(0.5);
+      // stroke(0);
+      // rect(x, y, pointSize);
+      // pop();
     }
     else {
-      //let pointSize = 10;
-      //ellipse(x, y, pointSize, pointSize);
-      set
+      // let pointSize = 3;
+      // ellipse(x, y, pointSize, pointSize);
       push();
       stroke(pixData);
       line(x + line1, y + line1, x - line2, y - line2);
@@ -64,6 +73,27 @@ function draw () {
     // uncomment this to save the result
     // saveArtworkImage(outputFile);
   }
+}
+
+function missing() {
+  push();
+  noStroke();
+
+  fill(255, 0, 220);
+  let boxSize = 30;
+  let gap = boxSize*2;
+
+  for(let i = 0; i <= width; i+=gap){
+    for(let j = 0; j <= height; j+=gap)
+    rect(i, j, boxSize, boxSize);
+  }
+
+  for(let i = 0; i <= width; i+=gap){
+    for(let j = 0; j <= height; j+=gap)
+    rect(i + boxSize, j + boxSize, boxSize, boxSize);
+  }
+  
+  pop();
 }
 
 function keyTyped() {
