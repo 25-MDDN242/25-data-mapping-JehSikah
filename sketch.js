@@ -27,12 +27,17 @@ function setup() {
   maskImg.loadPixels();
 }
 
-function draw() {
+let cell = 20;
+let skip = cell*2;
+
+
+function draw() {  
+  
+  
   //draw missing texture background
   if (layerCount == 0) {
     let fade = map(renderCounter, 0, 100, 255, 0);
-
-    missingTexture();
+       missingTexture();
     fill(0, 0, 0, fade);
     rect(0, 0, width, height);
 
@@ -46,11 +51,11 @@ function draw() {
   } else if (layerCount == 2) {
     for(let i=0;i<10;i++) {
         randPixel();
-    	}
+    }
 
     renderCounter++;
   } else if (layerCount == 3) {
-    
+ 
 
     renderCounter++;
   } else if (layerCount == 20) {
@@ -59,6 +64,7 @@ function draw() {
     // uncomment this to save the result
     // saveArtworkImage(outputFile);
   }
+
 
 
   if (layerCount == 0 && renderCounter > 100) {
@@ -72,6 +78,20 @@ function draw() {
     renderCounter = 0;
   }
 
+
+  // rectMode(CENTER);
+
+  // fill('red')
+  // for(let i = 0; i <= width; i += skip) {
+  //   for(let j = 0; j <= height; j += skip) {
+      
+  //     rect(i, j, cell, cell);
+  //     rect(i + cell, j + cell, cell, cell);
+
+  //   }
+  // }
+
+
   console.log("Layer: " + layerCount + "  Render: " + renderCounter);
   
 }
@@ -82,14 +102,12 @@ function missingTexture() {
 
   fill(255, 0, 220); //missing texture purp
   for(let i = 0; i <= width; i+=gap){
-    for(let j = 0; j <= height; j+=gap)
+    for(let j = 0; j <= height; j+=gap) {
     rect(i, j, boxSize, boxSize);
+    rect(i + boxSize, j + boxSize, boxSize, boxSize);
+}
   }
 
-  for(let i = 0; i <= width; i+=gap){
-    for(let j = 0; j <= height; j+=gap)
-    rect(i + boxSize, j + boxSize, boxSize, boxSize);
-  }
 }
 
 function randPixel(filler) {
@@ -114,6 +132,8 @@ function randPixel(filler) {
     pop();
   }
 }
+
+
 
 function keyTyped() {
   if (key == '!') {
