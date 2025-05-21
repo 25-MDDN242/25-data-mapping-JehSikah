@@ -5,6 +5,30 @@
 The images above are photos of Wellington CBD algorithmically processed with a lightly modified version of the [p5.js Pointillism example](https://p5js.org/examples/image-pointillism.html). The masks for each photo highlight various objects. Replace this text with your own which explains the source of your photos, masking, and applied algorithm.
 
 
+<p><iframe title="pages" src="https://25-mddn242.github.io/25-data-mapping-JehSikah/render.html" width="90%" height="540px"></iframe></p>
+
+https://img.freepik.com/premium-photo/shadowy-figure-emerges-from-distorted-digital-glitch-haunting-surreal-representation_924727-141636.jpg 
+https://i.redd.it/96gz7adgx40a1.jpg 
+
 started with changing what was dawn to arcs and parallel lines, its giving looking out the window on  a rainy day
 
 making ideas - taking a while
+
+
+no texture coming throug normal photo
+
+what i actually wanna do?
+draw photo first, then misstext spawn from center and start spreadng outwards to bounds of mask - some going horizontally outwards like glitch lines
+
+
+can make as many js files as i want, be clear which one I want graded in readme n stuff
+
+
+Actual code
+- started by drawing misstext in backgraound, then pointilism pixels drawing in the unmasked areas, first black, then the actual image
+
+- did 'scanning' by lin which converted the original image t orderly and evenly spaced pixels - then misstext would fill in the masked area i the same scanning way
+
+
+to do 
+- just make a test image and mask thing with single blobs to test out code
