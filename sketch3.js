@@ -52,10 +52,11 @@ function draw() {
             }
         }
         renderCounter = renderCounter + num_lines_to_draw;
-        //updatePixels();
+        updatePixels();
 
         
     //target center
+    /*
     if (maskCenter !== null) {
         strokeWeight(5);
         fill(0, 255, 0);
@@ -68,42 +69,107 @@ function draw() {
         let mch = maskCenterSize[1];
         rect(maskCenter[0]-mcw/2, maskCenter[1]-mch/2, mcw, mch);
     }    
+    */
     
+        //console.log("Render: " + renderCounter);
     }
+
     else if (layer == 1) {
-        for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<Y_STOP; j++) {
-            for(let i=0; i<X_STOP; i++) {
+        for(let j = renderCounter; j < renderCounter + num_lines_to_draw && j < Y_STOP; j+=gap) {
+            for(let i=0; i < X_STOP; i += gap) {
                 mask = maskImg.get(i, j);
-                if (mask[0] < 128) {
-                    missingTexture();
+                if (mask[0] > 128) {
+                    missingTexture(i, j);
                 }
             }
         }
         renderCounter = renderCounter + num_lines_to_draw;
     }
 
+    else if (layer == 2) {
+        fill(0, 0, 0, 5);
+        ellipse(maskCenter[0], maskCenter[1], maskCenterSize[0]+50, maskCenterSize[1]+50);
+    }
+
+    else if (layer == 3) {
+
+        push();
+        translate(maskCenter[0], maskCenter[1]);
+
+        // let boundL = maskCenter[0] - (maskCenterSize[0] / 2);
+        // let boundR = maskCenter[0] + (maskCenterSize[0] / 2);
+        // let boundU = maskCenter[1] - (maskCenterSize[1] / 2);
+        // let boundD = maskCenter[1] + (maskCenterSize[1] / 2);
+
+        // missingTexture(0,0);
 
 
-    if (layer == 0 && renderCounter <= 100000) {
-        layer = 1;
+        
+        for (let j = renderCounter; j < maskCenterSize[1]/2 + 50; j += gap) {
+            for (let i = 0; i < maskCenterSize[0]/2 + 50; i += gap) {
+                if (mask[0] > 128) {
+
+                }
+                missingTexture(i, j);
+                missingTexture(-i, j);
+                missingTexture(i, -j);
+                missingTexture(-i, -j);
+            }
+        }
+        
+
+        pop();
+    }
+
+
+
+    if (layer == 0 && renderCounter > 1920) {
+        layer = 3;
+        renderCounter = 0;
+    }
+    else if (layer == 1 && renderCounter > 1920) {
+        layer = 2;
+        renderCounter = 0;
+    }
+    else if (layer == 2 && renderCounter > 0.1) {
+        layer = 3;
         renderCounter = 0;
     }
 
     
 }
+let boxSize = 10;
+let gap = boxSize*2;
 
-
-function missingTexture() {
-    let boxSize = 20;
-    let gap = boxSize*2;
-
+function missingTexture(i, j) {
+    
     fill(255, 0, 220); //missing texture purp
+    rect(i-boxSize, j-boxSize, boxSize, boxSize);
+    rect(i, j, boxSize, boxSize);
+
+    fill(0); //missing texture purp
+    rect(i, j-boxSize, boxSize, boxSize);
+    rect(i-boxSize, j, boxSize, boxSize);
+
+    /*
+    fill(255, 0, 220); //missing texture purp
+    rect(i, j, boxSize, boxSize);
+    rect(i + boxSize, j + boxSize, boxSize, boxSize);
+
+    fill(0); //missing texture purp
+    rect(i, j, boxSize + boxSize, boxSize);
+    rect(i, j + boxSize, boxSize, boxSize);
+    */
+    
+    /*
+    
     for(let i = 0; i <= width; i+=gap){
         for(let j = 0; j <= height; j+=gap) {
             rect(i, j, boxSize, boxSize);
             rect(i + boxSize, j + boxSize, boxSize, boxSize);
         }
     }
+    */
 }
 
 
