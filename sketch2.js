@@ -1,5 +1,5 @@
-let sourceFile = "input_1.jpg";
-let maskFile   = "mask_1.png";
+let sourceFile = "test_img/input_1.jpg";
+let maskFile   = "test_img/mask_1.png";
 let outputFile = "output_1.png";
 
 function preload() {

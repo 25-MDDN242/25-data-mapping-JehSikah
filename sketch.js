@@ -5,8 +5,8 @@ let renderCounter=0;
 let layerCount = 0;
 
 // change these three lines as appropiate
-let sourceFile = "input_1.jpg";
-let maskFile   = "mask_1.png";
+let sourceFile = "test_img/input_1.jpg";
+let maskFile   = "test_img/mask_1.png";
 let outputFile = "output_1.png";
 
 function preload() {
@@ -105,7 +105,7 @@ function missingTexture() {
     for(let j = 0; j <= height; j+=gap) {
     rect(i, j, boxSize, boxSize);
     rect(i + boxSize, j + boxSize, boxSize, boxSize);
-}
+    }
   }
 
 }
