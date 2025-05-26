@@ -30,7 +30,12 @@ let pix, mask;
 let num_lines_to_draw = 40;
 
 function draw() {
-    if (layer == 0) {
+    if (layer == -1) {
+
+
+    }
+    
+    else if (layer == 0) {
         // get one scanline
         for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<Y_STOP; j++) {
             for(let i=0; i<X_STOP; i++) {
@@ -80,6 +85,9 @@ function draw() {
                 mask = maskImg.get(i, j);
                 if (mask[0] > 128) {
                     missingTexture(i, j);
+                    missingTexture(-i, j);
+                    missingTexture(i, -j);
+                    missingTexture(-i, -j);
                 }
             }
         }
@@ -92,47 +100,100 @@ function draw() {
     }
 
     else if (layer == 3) {
-
-        push();
-        translate(maskCenter[0], maskCenter[1]);
-
-        // let boundL = maskCenter[0] - (maskCenterSize[0] / 2);
-        // let boundR = maskCenter[0] + (maskCenterSize[0] / 2);
-        // let boundU = maskCenter[1] - (maskCenterSize[1] / 2);
-        // let boundD = maskCenter[1] + (maskCenterSize[1] / 2);
-
-        // missingTexture(0,0);
-
-
         
         for (let j = renderCounter; j < maskCenterSize[1]/2 + 50; j += gap) {
             for (let i = 0; i < maskCenterSize[0]/2 + 50; i += gap) {
+                mask = maskImg.get(i, j);
                 if (mask[0] > 128) {
-
-                }
-                missingTexture(i, j);
-                missingTexture(-i, j);
-                missingTexture(i, -j);
-                missingTexture(-i, -j);
+                    missingTexture(i, j);
+                    // missingTexture(-i, j);
+                    // missingTexture(i, -j);
+                    // missingTexture(-i, -j);
+                } 
             }
         }
-        
-
-        pop();
     }
 
+    else if (layer == 4) {
+
+        for(let j = renderCounter; j < renderCounter + num_lines_to_draw && j < height; j+=boxSize) {
+            /*
+            for(let i = counter; i < counter + lineLoad && i < width; i++) {
+                rect(i, j, cell, cell);
+            }
+            */
+            
+            for(let i = 0; i < width; i+=boxSize) {
+                mask = maskImg.get(i, j);
+                if (mask[0] < 128) {
+                    pixData = sourceImg.get(i, j);
+                    maskData = maskImg.get(i, j);
+                    fill(pixData);
+                    rect(i, j, boxSize, boxSize);
+                }
+            }
+        }
+        renderCounter = renderCounter + num_lines_to_draw;
+
+
+    }
+
+    else if (layer == 5) {
+
+        for(let j = renderCounter; j < renderCounter + num_lines_to_draw && j < height; j+=boxSize) {
+            for(let i = 0; i < width; i+=boxSize) {
+                mask = maskImg.get(i, j);
+                let check = dist(i, j, maskCenter[0], maskCenter[1]);
+                let rVert = int(random(30));
+                let rHor = int(random(30));
+                if (check < 500 && mask[0] < 128) {
+                    pixData = sourceImg.get(i, j);
+                    maskData = maskImg.get(i, j);
+                    fill(pixData);
+                    rect(i, j, boxSize +rVert, boxSize +rHor);
+                }
+            }
+        }
+        renderCounter = renderCounter + num_lines_to_draw;
+    } 
+
+    else if (layer == 6) {
+        for(let i=0;i<10;i++) {
+            let x = floor(random(sourceImg.width));
+            let y = floor(random(sourceImg.height));
+            mask = maskImg.get(x, y);
+            let rVert = int(random(30));
+            let rHor = int(random(30));
+            let check = dist(x, y, maskCenter[0], maskCenter[1]);
+            
+            if (check < 500 && mask[0] < 128) {
+                pixData = sourceImg.get(x, y);
+                maskData = maskImg.get(x, y);
+                fill(pixData);
+                rect(x, y, boxSize +rVert, boxSize +rHor);
+            }
+        }
+        renderCounter++;
+    }
+
+    let mouseChecker = dist(mouseX, mouseY, maskCenter[0], maskCenter[1]);
+    console.log("Dist; " + mouseChecker);
 
 
     if (layer == 0 && renderCounter > 1920) {
-        layer = 3;
+        layer = 1;
         renderCounter = 0;
     }
     else if (layer == 1 && renderCounter > 1920) {
-        layer = 2;
+        layer = 6;
         renderCounter = 0;
     }
     else if (layer == 2 && renderCounter > 0.1) {
         layer = 3;
+        renderCounter = 0;
+    }
+    else if (layer == 6 && renderCounter > 1000) {
+        layer = 7;
         renderCounter = 0;
     }
 
@@ -171,7 +232,6 @@ function missingTexture(i, j) {
     }
     */
 }
-
 
 
 
