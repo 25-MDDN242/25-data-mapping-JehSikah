@@ -30,5 +30,11 @@ Actual code
 - did 'scanning' by lin which converted the original image t orderly and evenly spaced pixels - then misstext would fill in the masked area i the same scanning way
 
 
+
+
+blocks arounds mask
+lines lead to mid?
+
+
 to do 
 - just make a test image and mask thing with single blobs to test out code
