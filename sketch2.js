@@ -30,7 +30,15 @@ function draw() {
     let pix = cell/2;
     let lineLoad = 20;
 
-    if(layer == 0) {
+    if (layer == -1) {
+        for(let j = counter; j < counter + lineLoad && j < height; j++) {
+            for(let i = 0; i < width; i++) {
+                pixData = sourceImg.get(i, j);
+                fill(pixData);
+            }
+        }
+    }
+    else if(layer == 0) {
 
         for(let j = counter; j < counter + lineLoad && j < height; j++) {
             /*
