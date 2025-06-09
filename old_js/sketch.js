@@ -5,8 +5,8 @@ let renderCounter=0;
 let layerCount = 0;
 
 // change these three lines as appropiate
-let sourceFile = "test_img/input_1.jpg";
-let maskFile   = "test_img/mask_1.png";
+let sourceFile = "mince_fail/input_1.jpg";
+let maskFile   = "mince_fail/mask_1.png";
 let outputFile = "output_1.png";
 
 function preload() {
